@@ -146,9 +146,9 @@ public class Deflate {
 					int i = frameIndex - 3;
 
 					int LEN = (in[i] & 0xff) | ((in[i + 1] & 0xff) << 8);
-					System.out.println(LEN);
 					// int NLEN = (in[i + 2] & 0xff) | ((in[i + 3] & 0xff) << 8);
 					System.arraycopy(in, i + 4, out, outIndex, LEN);
+
 					outIndex += LEN;
 					frameIndex += LEN + 1;
 					bit = 32;

@@ -12,8 +12,16 @@ JC := javac
 JAR := jar
 PG := proguard
 
-JFLAGS := -g -cp $(LIBS) -sourcepath $(SRC_DIR) -d $(CLASSES_DIR)
-PGFLAGS := -dontnote -dontwarn -libraryjars $(LIBS) -dontshrink -dontoptimize -keep 'public class com.bhmsware.jzip.JZip { public *; }'
+JFLAGS := -g \
+		  -cp $(LIBS) \
+		  -sourcepath $(SRC_DIR) \
+		  -d $(CLASSES_DIR)
+PGFLAGS := -dontnote \
+		   -dontwarn \
+		   -libraryjars $(LIBS) \
+		   -dontshrink \
+		   -dontoptimize \
+		   -keep 'public class com.bhmsware.jzip.JZip { public *; }'
 
 .PHONY: all distribute clean
 

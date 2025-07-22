@@ -2,11 +2,14 @@ package com.bhmsware.jzip;
 
 import java.io.*;
 
-public class JZip {
+public final class JZip {
 	private static final int MAX_VERSION_SUPPORTED = 20;
 	private static final int[] SUPPORTED_COMPRESSION_METHODS = {
 		0, 8
 	};
+
+	private JZip() {
+	}
 
 	public static byte[] extractFile(InputStream is, String path) throws Exception {
 		DataInputStream data = new DataInputStream(is);

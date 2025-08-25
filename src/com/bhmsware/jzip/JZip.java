@@ -72,7 +72,7 @@ public class JZip {
 		for(int i = 0; i < numCD; i++) {
 			// CD signature
 			if(inStream.readInt() != 0x504b0102)
-				throw new IllegalArgumentException("JZip: " + path + ": Bad CD signature");
+				throw new IllegalArgumentException("JZip: " + path + ": bad CD sig");
 			
 			byte structCD[] = new byte[42];
 
@@ -84,11 +84,6 @@ public class JZip {
 			inStream.read(bFilename);
 
 			if(new String(bFilename).equals(path)) {
-
-				// check compression method
-				int compMethod = (structCD[6] & 0xff) | ((structCD[7] & 0xff) << 8);
-				if(!checkCompMethod(compMethod))
-					throw new IllegalArgumentException("JZip: " + path + ": Unsupported compression method");
 
 				// allocate memory
 				compressed = new byte[(structCD[16] & 0xff) | 
@@ -110,7 +105,7 @@ public class JZip {
 							((structCD[41] & 0xff) << 24)));
 				// LFH signature
 				if(inStream.readInt() != 0x504b0304)
-					throw new IllegalArgumentException("JZip: " + path + ": Bad LFH signature");
+					throw new IllegalArgumentException("JZip: " + path + ": bad LFH sig");
 				// skip useless LFH stuff
 				inStream.skip(22);
 				inStream.skip(
@@ -124,8 +119,9 @@ public class JZip {
 				inStream.reset();
 
 				// decode now
-				if(!decodeData(uncompressed, compressed, compMethod))
-					throw new IllegalArgumentException("JZip: " + path + ": invalid compressed data to inflate");
+				if(!decodeData(uncompressed, compressed, (structCD[6] & 0xff) | ((structCD[7] & 0xff) << 8))) {
+					throw new IllegalArgumentException("JZip: " + path + ": cannot extract");
+				}
 
 				return uncompressed;
 
@@ -156,14 +152,6 @@ public class JZip {
 			// ZIP_CM_DEFLATE
 			case 8:
 				return new Deflate(out, in).deflate();
-		}
-
-		return false;
-	}
-
-	public static boolean checkCompMethod(int comp) {
-		for(int i = 0; i < SUPPORTED_COMPRESSION_METHODS.length; i++) {
-			if(comp == SUPPORTED_COMPRESSION_METHODS[i]) return true;
 		}
 
 		return false;

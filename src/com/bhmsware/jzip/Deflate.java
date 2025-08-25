@@ -32,10 +32,10 @@ public class Deflate {
 	private int outIndex = 0;
 
 	static {
-		short[] fixedCodes = new short[288];
-		byte[] fixedCodeLen = new byte[288];
-		short[] fixedDistCodes = new short[30];
-		byte[] fixedDistCodeLen = new byte[30];
+		short fixedCodes[] = new short[288];
+		byte fixedCodeLen[] = new byte[288];
+		short fixedDistCodes[] = new short[30];
+		byte fixedDistCodeLen[] = new byte[30];
 		
 		// fixed literal codes
 		for(int i = 0; i < 144; i++)
@@ -63,7 +63,7 @@ public class Deflate {
 		FIXED_DIST_CODE_LENGTHS = fixedDistCodeLen;
 	}
 
-	public Deflate(byte[] out, byte[] in) {
+	public Deflate(byte out[], byte in[]) {
 		this.out = out;
 		this.in = in;
 	}

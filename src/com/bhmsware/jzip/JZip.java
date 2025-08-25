@@ -3,7 +3,7 @@ package com.bhmsware.jzip;
 import java.io.*;
 
 public class JZip {
-	public static final int[] SUPPORTED_COMPRESSION_METHODS = { 0, 8 };
+	public static final int SUPPORTED_COMPRESSION_METHODS[] = { 0, 8 };
 
 	protected DataInputStream inStream;
 	protected int numCD;
@@ -45,7 +45,7 @@ public class JZip {
 		throw new IllegalArgumentException("JZip: EOCD not found");
 	}
 
-	protected void readEndOfCentralDirectory(byte[] buffer, int skipToEOCD) {
+	protected void readEndOfCentralDirectory(byte buffer[], int skipToEOCD) {
 		// signature (4 bytes)
 		// disk num (2 bytes)
 		// start disk num (2 bytes)
@@ -74,12 +74,12 @@ public class JZip {
 			if(inStream.readInt() != 0x504b0102)
 				throw new IllegalArgumentException("JZip: " + path + ": Bad CD signature");
 			
-			byte[] structCD = new byte[42];
+			byte structCD[] = new byte[42];
 
 			inStream.read(structCD);
 
 			// reading filename first
-			byte[] bFilename = new byte[(structCD[24] & 0xff) | 
+			byte bFilename[] = new byte[(structCD[24] & 0xff) | 
 				((structCD[25] & 0xff) << 8)];
 			inStream.read(bFilename);
 
@@ -146,7 +146,7 @@ public class JZip {
 		inStream.close();
 	}
 	
-	public static boolean decodeData(byte[] out, byte[] in, int compressionMethod) {
+	public static boolean decodeData(byte out[], byte in[], int compressionMethod) {
 		switch(compressionMethod) {
 			// ZIP_CM_STORE
 			case 0:

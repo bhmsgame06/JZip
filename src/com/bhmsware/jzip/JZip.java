@@ -134,6 +134,8 @@ public class JZip {
 			}
 		}
 
+		inStream.reset();
+
 		// don't forget to put your file inside next time
 		throw new IllegalArgumentException("JZip: " + path + ": entry not found");
 	}

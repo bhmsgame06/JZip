@@ -151,7 +151,7 @@ public class JZip {
 
 			// ZIP_CM_DEFLATE
 			case 8:
-				return new Deflate(out, in).deflate();
+				return new Deflate(out, in).decode();
 		}
 
 		return false;

@@ -122,7 +122,7 @@ public class Deflate {
 		}
 	}
 
-	public boolean deflate() {
+	public boolean decode() {
 		// header of blocks
 		boolean BFINAL;
 		int BTYPE;

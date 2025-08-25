@@ -141,6 +141,10 @@ public class JZip {
 		// don't forget to put your file inside next time
 		throw new IllegalArgumentException("JZip: " + path + ": entry not found");
 	}
+
+	public void close() throws IOException {
+		inStream.close();
+	}
 	
 	public static boolean decodeData(byte[] out, byte[] in, int compressionMethod) {
 		switch(compressionMethod) {
